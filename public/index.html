@@ -8,9 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&family=Sacramento&display=swap" rel="stylesheet">
   <style>
     /* Base & Responsive Styles */
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
     body {
       margin: 0;
       padding: 0;
@@ -20,42 +18,47 @@
       min-height: 100vh;
       color: #333;
       line-height: 1.6;
+      transition: background 0.5s ease;
     }
-    header, main, footer {
-      text-align: center;
-      padding: 1rem;
-    }
+    header, main, footer { text-align: center; padding: 1rem; }
     header h1 {
       font-family: 'Sacramento', cursive;
       font-size: 3em;
       color: #e91e63;
       margin: 0.5em 0;
-      text-shadow: 1px 1px 2px rgba(255, 209, 220, 0.9);
+      text-shadow: 1px 1px 2px rgba(255,209,220,0.9);
     }
-    header p {
-      font-size: 1.1em;
-      color: #999;
+    header p { font-size: 1.1em; color: #555; }
+    
+    /* Gear Icon for Settings */
+    #settingsIcon {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      background: transparent;
+      border: none;
+      font-size: 2em;
+      cursor: pointer;
+      z-index: 11000;
     }
     
     /* Container & Form */
     .container {
-      background: rgba(255, 245, 247, 0.95);
+      background: rgba(255,245,247,0.95);
       max-width: 700px;
-      margin: 1rem auto;
+      margin: 3rem auto 1rem;
       padding: 1.5rem;
       border-radius: 15px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: background 0.3s ease;
     }
-    form {
-      text-align: left;
-    }
+    form { text-align: left; }
     form label {
       display: block;
       margin: 0.7em 0 0.3em;
       font-weight: 600;
     }
-    form input[type="text"],
-    form textarea {
+    form input[type="text"], form textarea {
       width: 100%;
       padding: 0.75rem;
       border: 1px solid #f7a8b8;
@@ -82,30 +85,42 @@
       font-size: 1em;
       transition: background-color 0.3s ease;
     }
-    .button-row button:hover {
-      background-color: #b3245c;
-    }
+    .button-row button:hover { background-color: #b3245c; }
     
-    /* Output Section */
-    .output-container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-around;
+    /* Output Container – Letter Center and Song Sidebar */
+    #outputContainer {
+      display: none;
+      flex-direction: row;
+      justify-content: space-between;
       align-items: flex-start;
       margin-top: 1rem;
     }
-    .letter-output, 
-    .song-output {
+    .letter-output {
+      flex: 3;
+      margin-right: 1rem;
       background: #fff;
       border: 1px solid #f7a8b8;
       border-radius: 5px;
       padding: 1rem;
-      flex: 1;
-      min-width: 250px;
       font-style: italic;
       white-space: pre-wrap;
-      margin: 0.5rem;
     }
+    .song-output {
+      flex: 1;
+      min-width: 200px;
+      background: #fff;
+      border: 1px solid #f7a8b8;
+      border-radius: 5px;
+      padding: 1rem;
+      font-style: italic;
+      white-space: pre-wrap;
+    }
+    /* Play Music button in song output area */
+    #playMusicBtn {
+      margin-top: 0.5rem;
+      background-color: #388e3c;
+    }
+    #playMusicBtn:hover { background-color: #2e7d32; }
     
     /* Popup Message for Copy Confirmation */
     .copy-popup {
@@ -113,7 +128,7 @@
       top: 20px;
       left: 50%;
       transform: translateX(-50%);
-      background-color: rgba(0, 0, 0, 0.75);
+      background-color: rgba(0,0,0,0.75);
       color: #fff;
       padding: 0.75rem 1.5rem;
       border-radius: 5px;
@@ -122,11 +137,9 @@
       opacity: 0;
       transition: opacity 0.3s ease;
     }
-    .copy-popup.show {
-      opacity: 1;
-    }
+    .copy-popup.show { opacity: 1; }
     
-    /* Share Modal Dialog */
+    /* Share Modal Dialog (only Twitter, Mail, Download) */
     .modal-overlay {
       position: fixed;
       top: 0;
@@ -139,9 +152,7 @@
       align-items: center;
       z-index: 10000;
     }
-    .modal-overlay.active {
-      display: flex;
-    }
+    .modal-overlay.active { display: flex; }
     .modal {
       background: #fff;
       border-radius: 10px;
@@ -165,9 +176,7 @@
       cursor: pointer;
       transition: background-color 0.3s ease;
     }
-    .modal button:hover {
-      background-color: #b3245c;
-    }
+    .modal button:hover { background-color: #b3245c; }
     .close-modal {
       display: block;
       margin-top: 1rem;
@@ -177,6 +186,78 @@
       color: #555;
       cursor: pointer;
     }
+    
+    /* Music Modal Dialog (now only Spotify and SoundCloud) */
+    .music-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+    }
+    .music-modal-overlay.active { display: flex; }
+    .music-modal {
+      background: #fff;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 400px;
+      padding: 1.5rem;
+      text-align: center;
+    }
+    
+    /* Settings Modal Dialog */
+    .settings-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+    }
+    .settings-modal-overlay.active { display: flex; }
+    .settings-modal {
+      background: #fff;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 500px;
+      padding: 1.5rem;
+      text-align: left;
+    }
+    .settings-modal h2 {
+      margin-top: 0;
+      font-family: 'Sacramento', cursive;
+      color: #e91e63;
+      text-align: center;
+    }
+    .settings-modal label {
+      font-weight: bold;
+      margin-top: 0.5rem;
+      display: block;
+    }
+    .settings-modal select, .settings-modal input[type="checkbox"] {
+      margin: 0.5rem 0 1rem;
+    }
+    .settings-modal button {
+      background-color: #d6336c;
+      color: white;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      display: block;
+      margin: 0.5rem auto;
+    }
+    .settings-modal button:hover { background-color: #b3245c; }
     
     /* Footer */
     footer {
@@ -221,66 +302,128 @@
     @media (max-width: 600px) {
       header h1 { font-size: 2.5em; }
       .button-row { flex-direction: column; }
+      #outputContainer { flex-direction: column; }
+    }
+    
+    /* Dark Theme Styles */
+    body.dark-theme {
+      background: #121212;
+      color: #ddd;
+    }
+    body.dark-theme .container {
+      background: #1f1f1f;
+      border-color: #444;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.6);
     }
   </style>
 </head>
 <body>
-  <!-- Popup for Copy Confirmation -->
-  <div id="copyPopup" class="copy-popup" role="alert" aria-live="assertive">Copied to clipboard!</div>
-
-  <!-- Share Modal Dialog -->
+  <!-- Gear Icon for Settings -->
+  <button id="settingsIcon" onclick="openSettings()">⚙</button>
+  
+  <!-- Settings Modal Dialog -->
+  <div id="settingsModal" class="settings-modal-overlay" role="dialog" aria-modal="true">
+    <div class="settings-modal">
+      <h2>Settings</h2>
+      <label for="themeSelect">Theme</label>
+      <select id="themeSelect" onchange="applySettings()">
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+      </select>
+      
+      <label for="fontSelect">Font Style</label>
+      <select id="fontSelect" onchange="applySettings()">
+        <option value="'Times New Roman', serif">Times New Roman</option>
+        <option value="'Comic Sans MS', cursive">Comic Sans MS</option>
+        <option value="'Courier New', monospace">Courier New</option>
+        <option value="cursive">Cursive Script</option>
+        <option value="'Brush Script MT', cursive">Brush Script MT</option>
+        <option value="'Old English Text MT', fantasy">Old English Text MT</option>
+        <option value="'Vladimir Script', cursive">Vladimir Script</option>
+      </select>
+      
+      <label for="languageSelect">Language</label>
+      <select id="languageSelect" disabled>
+        <option value="english">English</option>
+      </select>
+      
+      <label>
+        <input type="checkbox" id="historyToggle" onchange="applySettings()" />
+        Save History
+      </label>
+      <button onclick="viewHistory()">View History</button>
+      <button class="close-modal" onclick="closeSettings()">Close</button>
+    </div>
+  </div>
+  
+  <!-- Share Modal Dialog (Only Twitter, Mail & Download) -->
   <div id="shareModal" class="modal-overlay" role="dialog" aria-modal="true">
     <div class="modal">
       <h2>Share Your Love Letter</h2>
       <p>Select a platform:</p>
       <button onclick="sharePlatform('twitter')">Twitter</button>
- 
-
+      <button onclick="sharePlatform('mail')">Mail</button>
+      <button onclick="downloadLetter()">Download</button>
       <button class="close-modal" onclick="closeShareDialog()">Close</button>
     </div>
   </div>
-
+  
+  <!-- Music Modal Dialog (Only Spotify & SoundCloud) -->
+  <div id="musicModal" class="music-modal-overlay" role="dialog" aria-modal="true">
+    <div class="music-modal">
+      <h2>Play Recommended Music</h2>
+      <p>Select a platform:</p>
+      <button onclick="playMusicOption('spotify')">Spotify</button>
+      <button onclick="playMusicOption('soundcloud')">SoundCloud</button>
+      <button class="close-modal" onclick="closeMusicModal()">Close</button>
+    </div>
+  </div>
+  
   <header>
     <h1>Love at First Write</h1>
     <p>Where every keystroke expresses the heart.</p>
   </header>
-
+  
   <main>
     <div class="container">
       <form id="loveLetterForm">
         <label for="name">Name of the person you are writing to</label>
-        <input type="text" id="name" name="name" placeholder="Enter Name" required />
-
+        <input type="text" id="name" name="name" placeholder="Enter Recipient's Name" required />
+        
+        <label for="senderName">Your Name</label>
+        <input type="text" id="senderName" name="senderName" placeholder="Enter Your Name" required />
+        
         <label for="emotions">Emotions you want to convey</label>
         <textarea id="emotions" name="emotions" placeholder="e.g. passion, tenderness" rows="3"></textarea>
-
+        
         <label for="memories">Special memories or moments you’ve shared</label>
         <textarea id="memories" name="memories" placeholder="e.g. our first date, that summer vacation" rows="3"></textarea>
-
+        
         <label for="hopes">Your hopes for the future</label>
         <textarea id="hopes" name="hopes" placeholder="e.g. endless adventures, growing together" rows="3"></textarea>
       </form>
-
-      <!-- Horizontal Button Row (Generate, Regenerate, Copy, and Share) -->
+      
+      <!-- Horizontal Button Row -->
       <div class="button-row">
         <button type="button" id="generateBtn" onclick="generateLoveLetter()">Generate</button>
         <button type="button" id="regenBtn" onclick="generateLoveLetter()" style="display: none;">Regenerate</button>
         <button type="button" id="copyBtn" onclick="copyToClipboard()" style="display: none;">Copy</button>
         <button type="button" id="shareBtn" onclick="openShareDialog()" style="display: none;">Share</button>
+        <button type="button" id="playMusicBtn" onclick="openMusicModal()" style="display: none;">Play Music</button>
       </div>
-
-      <!-- Output Container -->
+      
+      <!-- Output Container (initially hidden) -->
       <div id="outputContainer" class="output-container">
         <article id="loveLetterOutput" class="letter-output" aria-label="Generated Love Letter"></article>
         <aside id="songRecommendationOutput" class="song-output" aria-label="Song Recommendation"></aside>
       </div>
     </div>
   </main>
-
+  
   <footer>
-    <p>&copy; 2025 Love at First Write</p>
+    <p>&copy; 2023 Love at First Write</p>
   </footer>
-
+  
   <!-- Floating Hearts -->
   <div class="falling-hearts">
     <div class="heart">♥</div>
@@ -294,30 +437,32 @@
     <div class="heart">♥</div>
     <div class="heart">♥</div>
   </div>
-
+  
+  <!-- Copy Popup -->
+  <div id="copyPopup" class="copy-popup" role="alert" aria-live="assertive">Copied to clipboard!</div>
+  
   <script>
-    // Global variables for typewriter effect
     let fullLetterText = "";
     let currentIndex = 0;
-    const typewriterSpeed = 30; // milliseconds per character
-
-    // Generate the love letter and song recommendation with a typewriter effect
+    const typewriterSpeed = 30;
+    
+    // Generate love letter with typewriter effect and assign a song recommendation
     function generateLoveLetter() {
-      const name = document.getElementById('name').value.trim() || "Beloved";
+      const recipientName = document.getElementById('name').value.trim() || "Beloved";
+      const senderName = document.getElementById('senderName').value.trim() || "Your Name";
       const emotions = document.getElementById('emotions').value.trim();
       const memories = document.getElementById('memories').value.trim();
       const hopes = document.getElementById('hopes').value.trim();
-
-      // Randomized greetings using template literals
+      
       const greetings = [
-        `My dearest ${name},`,
-        `Dear ${name},`,
-        `${name}, my love,`,
-        `To my beloved ${name},`,
-        `Sweet ${name},`
+        `My dearest ${recipientName},`,
+        `Dear ${recipientName},`,
+        `${recipientName}, my love,`,
+        `To my beloved ${recipientName},`,
+        `Sweet ${recipientName},`
       ];
       const intro = greetings[Math.floor(Math.random() * greetings.length)];
-
+      
       const para1Options = [
         "From the moment we crossed paths, I sensed an indescribable connection—as if our souls recognized one another. " +
           (emotions ? `Every moment with you is filled with the radiance of ${emotions}. ` : "Your presence transforms the ordinary into magic. "),
@@ -327,27 +472,21 @@
           (emotions ? `The echo of ${emotions} in my heart is a reminder of our bond. ` : "Our connection is as enchanting as a timeless melody. ")
       ];
       const paragraph1 = para1Options[Math.floor(Math.random() * para1Options.length)];
-
+      
       const para2Options = [
-        memories ? `I cherish every memory of ${memories}, each one a precious note in our symphony. ` :
-        "The memories we create are timeless treasures that illuminate my soul.",
-        memories ? `Thinking back on ${memories} fills me with profound joy—a collection of moments that make our story unique. ` :
-        "Every shared moment is a brushstroke on the canvas of our love.",
-        memories ? `The recollection of ${memories} wraps me in warmth—each memory an invitation to smile. ` :
-        "Our past moments whisper a love story written in the stars."
+        memories ? `I cherish every memory of ${memories}, each one a precious note in our symphony. ` : "The memories we create are timeless treasures that illuminate my soul.",
+        memories ? `Thinking back on ${memories} fills me with profound joy—a collection of moments that make our story unique. ` : "Every shared moment is a brushstroke on the canvas of our love.",
+        memories ? `The recollection of ${memories} wraps me in warmth—each memory an invitation to smile. ` : "Our past moments whisper a love story written in the stars."
       ];
       const paragraph2 = para2Options[Math.floor(Math.random() * para2Options.length)];
-
+      
       const para3Options = [
-        hopes ? `I envision a future filled with ${hopes}, where each day unfolds a new chapter of tenderness.` :
-        "I eagerly await a tomorrow that deepens our bond and brightens our horizon.",
-        hopes ? `In my dreams, our journey continues with ${hopes}—a tapestry of adventures and whispered promises.` :
-        "Every new day is a promise of love and togetherness.",
-        hopes ? `May the coming days be adorned with ${hopes}, leading us to a world where our love blossoms.` :
-        "I look forward to a future as enchanting as the love we nurture every day."
+        hopes ? `I envision a future filled with ${hopes}, where each day unfolds a new chapter of tenderness.` : "I eagerly await a tomorrow that deepens our bond and brightens our horizon.",
+        hopes ? `In my dreams, our journey continues with ${hopes}—a tapestry of adventures and whispered promises.` : "Every new day is a promise of love and togetherness.",
+        hopes ? `May the coming days be adorned with ${hopes}, leading us to a world where our love blossoms.` : "I look forward to a future as enchanting as the love we nurture every day."
       ];
       const paragraph3 = para3Options[Math.floor(Math.random() * para3Options.length)];
-
+      
       const closings = [
         "Forever and always,",
         "Yours eternally,",
@@ -356,15 +495,11 @@
         "Always yours,"
       ];
       const closing = closings[Math.floor(Math.random() * closings.length)];
-
-      // Assemble the full letter text
-      fullLetterText = intro + "\n\n" +
-                       paragraph1 + "\n\n" +
-                       paragraph2 + "\n\n" +
-                       paragraph3 + "\n\n" +
-                       closing + "\n[Your Name]";
-
-      // Song Recommendation
+      
+      // Assemble full letter text and use senderName as the signature.
+      fullLetterText = intro + "\n\n" + paragraph1 + "\n\n" + paragraph2 + "\n\n" + paragraph3 + "\n\n" + closing + "\n" + senderName;
+      
+      // Random Song Recommendation
       const songRecommendations = [
         "Can't Help Falling in Love - Elvis Presley",
         "I Will Always Love You - Whitney Houston",
@@ -388,20 +523,28 @@
         "Crazy in Love - Beyoncé featuring Jay-Z"
       ];
       const recommendedSong = songRecommendations[Math.floor(Math.random() * songRecommendations.length)];
-
-      // Reveal additional buttons
+      
+      // Reset outputs and reveal the output container and additional buttons
+      document.getElementById('loveLetterOutput').innerText = "";
+      document.getElementById('songRecommendationOutput').innerText = "Recommended Song: " + recommendedSong;
+      document.getElementById('outputContainer').style.display = "flex";
+      
       document.getElementById('regenBtn').style.display = "inline-block";
       document.getElementById('copyBtn').style.display = "inline-block";
       document.getElementById('shareBtn').style.display = "inline-block";
-
-      // Clear output areas and start the typewriter effect for the love letter
-      document.getElementById('loveLetterOutput').innerText = "";
-      document.getElementById('songRecommendationOutput').innerText = "Recommended Song: " + recommendedSong;
+      document.getElementById('playMusicBtn').style.display = "inline-block";
+      
       currentIndex = 0;
       typeWriter();
+      
+      // Save to history if enabled
+      if (document.getElementById('historyToggle').checked) {
+        let history = JSON.parse(localStorage.getItem('loveLetterHistory')) || [];
+        history.push(fullLetterText);
+        localStorage.setItem('loveLetterHistory', JSON.stringify(history));
+      }
     }
-
-    // Typewriter effect (character by character)
+    
     function typeWriter() {
       if (currentIndex < fullLetterText.length) {
         document.getElementById('loveLetterOutput').innerText += fullLetterText.charAt(currentIndex);
@@ -409,11 +552,9 @@
         setTimeout(typeWriter, typewriterSpeed);
       }
     }
-
-    // Copy content to clipboard with fallback
+    
     function copyToClipboard() {
-      const textToCopy = document.getElementById('loveLetterOutput').innerText + "\n" +
-                         document.getElementById('songRecommendationOutput').innerText;
+      const textToCopy = document.getElementById('loveLetterOutput').innerText + "\n" + document.getElementById('songRecommendationOutput').innerText;
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(textToCopy)
           .then(() => { showPopup("Copied to clipboard!"); })
@@ -422,6 +563,7 @@
         fallbackCopyTextToClipboard(textToCopy);
       }
     }
+    
     function fallbackCopyTextToClipboard(text) {
       const textArea = document.createElement("textarea");
       textArea.value = text;
@@ -437,31 +579,102 @@
       }
       document.body.removeChild(textArea);
     }
+    
     function showPopup(message) {
       const popup = document.getElementById('copyPopup');
       popup.innerText = message;
       popup.classList.add("show");
       setTimeout(() => { popup.classList.remove("show"); }, 2000);
     }
-
-    // Open the Share Dialog Modal
+    
     function openShareDialog() {
       document.getElementById('shareModal').classList.add('active');
     }
+    
     function closeShareDialog() {
       document.getElementById('shareModal').classList.remove('active');
     }
-    // Share the content based on selected platform
+    
+    // Share: Uses only Twitter and Mail; Download option is handled separately.
     function sharePlatform(platform) {
       const letterText = document.getElementById('loveLetterOutput').innerText;
       const songText = document.getElementById('songRecommendationOutput').innerText;
       const fullText = encodeURIComponent(letterText + "\n" + songText);
       let shareURL = "";
-      if (platform === 'twitter') {
+      if (platform === "twitter") {
         shareURL = "https://twitter.com/intent/tweet?text=" + fullText;
-      } 
+      } else if (platform === "mail") {
+        shareURL = "mailto:?subject=Love%20Letter&body=" + fullText;
+      }
       window.open(shareURL, "_blank");
       closeShareDialog();
+    }
+    
+    function downloadLetter() {
+      const content = document.getElementById('loveLetterOutput').innerText + "\n" + document.getElementById('songRecommendationOutput').innerText;
+      const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
+      // For IE/Edge support
+      if (window.navigator.msSaveOrOpenBlob) {
+        window.navigator.msSaveOrOpenBlob(blob, "love_letter.txt");
+      } else {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.style.display = "none";
+        a.href = url;
+        a.download = "love_letter.txt";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }
+    }
+    
+    function openMusicModal() {
+      document.getElementById('musicModal').classList.add('active');
+    }
+    
+    function closeMusicModal() {
+      document.getElementById('musicModal').classList.remove('active');
+    }
+    
+    function playMusicOption(option) {
+      const songText = document.getElementById('songRecommendationOutput').innerText.replace("Recommended Song: ", "");
+      let url = "";
+      if (option === "spotify") {
+        url = "https://open.spotify.com/search/" + encodeURIComponent(songText);
+      } else if (option === "soundcloud") {
+        url = "https://soundcloud.com/search?q=" + encodeURIComponent(songText);
+      }
+      window.open(url, "_blank");
+      closeMusicModal();
+    }
+    
+    function openSettings() {
+      document.getElementById('settingsModal').classList.add('active');
+    }
+    
+    function closeSettings() {
+      document.getElementById('settingsModal').classList.remove('active');
+    }
+    
+    function applySettings() {
+      const theme = document.getElementById('themeSelect').value;
+      if (theme === "dark") {
+        document.body.classList.add("dark-theme");
+      } else {
+        document.body.classList.remove("dark-theme");
+      }
+      const font = document.getElementById('fontSelect').value;
+      document.getElementById('loveLetterOutput').style.fontFamily = font;
+    }
+    
+    function viewHistory() {
+      let history = JSON.parse(localStorage.getItem("loveLetterHistory")) || [];
+      if (history.length === 0) {
+        alert("No history available.");
+      } else {
+        alert("History:\n\n" + history.join("\n\n---\n\n"));
+      }
     }
   </script>
 </body>
