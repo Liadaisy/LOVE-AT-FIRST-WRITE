@@ -1,32 +1,43 @@
-# LOVE-AT-FIRST-WRITE
-Overview
+Love At First Write 🎯
 
-Love at First Write is an interactive web application that helps users craft personalized love letters effortlessly. By providing basic inputs like names, emotions, and shared memories, users can generate unique letters paired with curated song recommendations. The platform enables easy sharing on social media platforms like Twitter, Facebook, and Instagram.
-Features Personalized Love Letter Generation: Craft unique letters by inputting names, emotions, and memories.
+Basic Details
 
-Song Recommendations: Enhance the experience with a curated song suggestion for every letter.
+Team Name: LiFe
 
-Copy to Clipboard: Quickly copy the generated love letter for sharing or printing.
+Team Members
+Member 1:  Fidhas - Gcek - Html backbone
+Member 2: Ann Lia Sunil  - Jyothi Engineering College - CSS and Javascipt blend in 
 
-Social Media Sharing: Share your letter seamlessly on Twitter via an intuitive share dialog.
+Project Description
+Love at First Write is a web-based tool that helps users create heartfelt love letters by inputting their emotions, memories, and hopes for the future. It also provides a personalized song recommendation to enhance the romantic experience. 💌✨
 
-Typewriter Animation: Letters appear gradually, simulating a heartfelt writing experience.
+Technical Details
+Languages Used: HTML, CSS, JavaScript
+Frameworks Used: None (Pure HTML/CSS/JS)
+Libraries Used: Google Fonts (Montserrat, Sacramento)
+Tools Used: Vercel (Deployment), Git Copilot, Microsoft
 
-Responsive Design: The platform adapts to any device, offering a seamless user experience on desktops, tablets, and mobile devices.
+Implementation:
+Installation
+No installation required! Simply visit the deployed site or clone the repository:git clone: https://github.com/Liadaisy/LOVE-AT-FIRST-WRITE.git
+Run
+Open index.html in any modern web browser.
 
-Floating Hearts Animation: Add a magical, romantic touch to the webpage with beautiful falling hearts.
+Screenshots (Add at least 3)
+![1](https://github.com/user-attachments/assets/98034661-5bab-4701-b461-f645047f0c05)
+Love at First Write - Input Form:This image showcases the main interface of "Love at First Write," where users input details such as the recipient's name, emotions they want to convey, shared memories, and hopes for the future to generate a heartfelt letter.
+![2](https://github.com/user-attachments/assets/574eb9b2-dbbc-4cc0-9fd9-eaa169453f6c)
+Generated Love Letter & Song Recommendation:After filling out the form, the system generates a personalized romantic letter based on the provided inputs. Additionally, a song recommendation is suggested to complement the emotions in the letter. Users can regenerate, copy, or share the letter.
 
-Usage Enter the recipient's name and details such as shared memories, emotions, and hopes for the future.
+![3](https://github.com/user-attachments/assets/1ed9942c-b0f3-4d40-b822-73f14593a339)
+Mobile Interface of Love at First Write:This image displays the mobile-optimized version of the platform, ensuring a seamless user experience across devices. The design retains the same aesthetic while making it accessible on smartphones.
 
-Click the "Generate" button to create a personalized love letter with a song recommendation.
+Project Demo
+Video
 
-Use the Copy button to save the letter to your clipboard or the Share button to post it directly on social media.
 
-Technologies Used HTML5: Structuring the content.
+[https://github.com/user-attachments/assets/dabdf11c-8222-4d96-a9a7-7f9e4372ade1]
 
-CSS3: Styling the page, including responsive design and animations.
 
-JavaScript: Implementing dynamic behavior such as generating content, typewriter animation, and clipboard sharing.
-
-For the best experience, run the project on a local server or a secure HTTPS environment to enable features like clipboard API.
+This video showcases the functionality of 'Love at First Write,' a web-based tool designed to generate heartfelt love letters. It walks through the user-friendly interface, where users enter details such as the recipient’s name, emotions they wish to express, special memories, and hopes for the future. Once submitted, the tool crafts a beautifully written, personalized love letter using a dynamic text generation system. Additionally, the platform suggests a song that complements the mood of the letter. The video demonstrates how users can generate, copy, and share their letters effortlessly, making expressing love and affection easier than ever.
 
