@@ -23,7 +23,7 @@ No installation required! Simply visit the deployed site or clone the repository
 Run
 Open index.html in any modern web browser.
 
-Screenshots (Add at least 3)
+Screenshots 
 ![1](https://github.com/user-attachments/assets/98034661-5bab-4701-b461-f645047f0c05)
 Love at First Write - Input Form:This image showcases the main interface of "Love at First Write," where users input details such as the recipient's name, emotions they want to convey, shared memories, and hopes for the future to generate a heartfelt letter.
 ![2](https://github.com/user-attachments/assets/574eb9b2-dbbc-4cc0-9fd9-eaa169453f6c)
