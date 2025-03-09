@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Love at First Write</title>
+  <!-- Google Fonts for a handwritten feel -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&family=Sacramento&display=swap" rel="stylesheet">
+  <style>
+    /* Base & Responsive Styles */
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Montserrat', sans-serif;
+      background: url("https://media.post.rvohealth.io/wp-content/uploads/sites/4/2022/02/rainbow-colorful-heart-tunnel-1296x728-header-1024x575.jpg") no-repeat center center;
+      background-size: cover;
+      min-height: 100vh;
+      color: #333;
+      line-height: 1.6;
+    }
+    header, main, footer {
+      text-align: center;
+      padding: 1rem;
+    }
+    header h1 {
+      font-family: 'Sacramento', cursive;
+      font-size: 3em;
+      color: #e91e63;
+      margin: 0.5em 0;
+      text-shadow: 1px 1px 2px rgba(255, 209, 220, 0.9);
+    }
+    header p {
+      font-size: 1.1em;
+      color: #999;
+    }
+    
+    /* Container & Form */
+    .container {
+      background: rgba(255, 245, 247, 0.95);
+      max-width: 700px;
+      margin: 1rem auto;
+      padding: 1.5rem;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    form {
+      text-align: left;
+    }
+    form label {
+      display: block;
+      margin: 0.7em 0 0.3em;
+      font-weight: 600;
+    }
+    form input[type="text"],
+    form textarea {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #f7a8b8;
+      border-radius: 5px;
+      margin-bottom: 0.5rem;
+      font-size: 1em;
+    }
+    
+    /* Horizontal Button Row */
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+    .button-row button {
+      background-color: #d6336c;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background-color 0.3s ease;
+    }
+    .button-row button:hover {
+      background-color: #b3245c;
+    }
+    
+    /* Output Section */
+    .output-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      align-items: flex-start;
+      margin-top: 1rem;
+    }
+    .letter-output, 
+    .song-output {
+      background: #fff;
+      border: 1px solid #f7a8b8;
+      border-radius: 5px;
+      padding: 1rem;
+      flex: 1;
+      min-width: 250px;
+      font-style: italic;
+      white-space: pre-wrap;
+      margin: 0.5rem;
+    }
+    
+    /* Popup Message for Copy Confirmation */
+    .copy-popup {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: rgba(0, 0, 0, 0.75);
+      color: #fff;
+      padding: 0.75rem 1.5rem;
+      border-radius: 5px;
+      font-size: 1em;
+      z-index: 9999;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .copy-popup.show {
+      opacity: 1;
+    }
+    
+    /* Share Modal Dialog */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+    }
+    .modal-overlay.active {
+      display: flex;
+    }
+    .modal {
+      background: #fff;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 400px;
+      padding: 1.5rem;
+      text-align: center;
+    }
+    .modal h2 {
+      margin-top: 0;
+      font-family: 'Sacramento', cursive;
+      color: #e91e63;
+    }
+    .modal button {
+      background-color: #d6336c;
+      color: white;
+      padding: 0.5rem 1rem;
+      margin: 0.5rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .modal button:hover {
+      background-color: #b3245c;
+    }
+    .close-modal {
+      display: block;
+      margin-top: 1rem;
+      background: none;
+      border: none;
+      font-size: 1.2em;
+      color: #555;
+      cursor: pointer;
+    }
+    
+    /* Footer */
+    footer {
+      font-size: 0.9em;
+      color: #666;
+      margin-top: 2rem;
+    }
+    
+    /* Floating Hearts */
+    .falling-hearts {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: -1;
+    }
+    .heart {
+      position: absolute;
+      font-size: 24px;
+      color: pink;
+      opacity: 0.75;
+      animation: fall linear infinite;
+    }
+    @keyframes fall {
+      0% { transform: translateY(-10vh) rotate(0deg); }
+      100% { transform: translateY(110vh) rotate(360deg); }
+    }
+    .heart:nth-child(1) { left: 10%; animation-duration: 8s; }
+    .heart:nth-child(2) { left: 30%; animation-duration: 6s; animation-delay: 1s; }
+    .heart:nth-child(3) { left: 50%; animation-duration: 7s; animation-delay: 2s; }
+    .heart:nth-child(4) { left: 70%; animation-duration: 9s; animation-delay: 1.5s; }
+    .heart:nth-child(5) { left: 90%; animation-duration: 8s; animation-delay: 0.5s; }
+    .heart:nth-child(6) { left: 20%; animation-duration: 7.5s; animation-delay: 2.5s; }
+    .heart:nth-child(7) { left: 40%; animation-duration: 9.5s; animation-delay: 1.2s; }
+    .heart:nth-child(8) { left: 60%; animation-duration: 6.5s; animation-delay: 0.8s; }
+    .heart:nth-child(9) { left: 80%; animation-duration: 8.5s; animation-delay: 2.2s; }
+    .heart:nth-child(10){ left: 50%; animation-duration: 10s; animation-delay: 3s; }
+    
+    @media (max-width: 600px) {
+      header h1 { font-size: 2.5em; }
+      .button-row { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Popup for Copy Confirmation -->
+  <div id="copyPopup" class="copy-popup" role="alert" aria-live="assertive">Copied to clipboard!</div>
+
+  <!-- Share Modal Dialog -->
+  <div id="shareModal" class="modal-overlay" role="dialog" aria-modal="true">
+    <div class="modal">
+      <h2>Share Your Love Letter</h2>
+      <p>Select a platform:</p>
+      <button onclick="sharePlatform('twitter')">Twitter</button>
+ 
+
+      <button class="close-modal" onclick="closeShareDialog()">Close</button>
+    </div>
+  </div>
+
+  <header>
+    <h1>Love at First Write</h1>
+    <p>Where every keystroke expresses the heart.</p>
+  </header>
+
+  <main>
+    <div class="container">
+      <form id="loveLetterForm">
+        <label for="name">Name of the person you are writing to</label>
+        <input type="text" id="name" name="name" placeholder="Enter Name" required />
+
+        <label for="emotions">Emotions you want to convey</label>
+        <textarea id="emotions" name="emotions" placeholder="e.g. passion, tenderness" rows="3"></textarea>
+
+        <label for="memories">Special memories or moments you’ve shared</label>
+        <textarea id="memories" name="memories" placeholder="e.g. our first date, that summer vacation" rows="3"></textarea>
+
+        <label for="hopes">Your hopes for the future</label>
+        <textarea id="hopes" name="hopes" placeholder="e.g. endless adventures, growing together" rows="3"></textarea>
+      </form>
+
+      <!-- Horizontal Button Row (Generate, Regenerate, Copy, and Share) -->
+      <div class="button-row">
+        <button type="button" id="generateBtn" onclick="generateLoveLetter()">Generate</button>
+        <button type="button" id="regenBtn" onclick="generateLoveLetter()" style="display: none;">Regenerate</button>
+        <button type="button" id="copyBtn" onclick="copyToClipboard()" style="display: none;">Copy</button>
+        <button type="button" id="shareBtn" onclick="openShareDialog()" style="display: none;">Share</button>
+      </div>
+
+      <!-- Output Container -->
+      <div id="outputContainer" class="output-container">
+        <article id="loveLetterOutput" class="letter-output" aria-label="Generated Love Letter"></article>
+        <aside id="songRecommendationOutput" class="song-output" aria-label="Song Recommendation"></aside>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Love at First Write</p>
+  </footer>
+
+  <!-- Floating Hearts -->
+  <div class="falling-hearts">
+    <div class="heart">♥</div>
+    <div class="heart">♥</div>
+    <div class="heart">♥</div>
+    <div class="heart">♥</div>
+    <div class="heart">♥</div>
+    <div class="heart">♥</div>
+    <div class="heart">♥</div>
+    <div class="heart">♥</div>
+    <div class="heart">♥</div>
+    <div class="heart">♥</div>
+  </div>
+
+  <script>
+    // Global variables for typewriter effect
+    let fullLetterText = "";
+    let currentIndex = 0;
+    const typewriterSpeed = 30; // milliseconds per character
+
+    // Generate the love letter and song recommendation with a typewriter effect
+    function generateLoveLetter() {
+      const name = document.getElementById('name').value.trim() || "Beloved";
+      const emotions = document.getElementById('emotions').value.trim();
+      const memories = document.getElementById('memories').value.trim();
+      const hopes = document.getElementById('hopes').value.trim();
+
+      // Randomized greetings using template literals
+      const greetings = [
+        `My dearest ${name},`,
+        `Dear ${name},`,
+        `${name}, my love,`,
+        `To my beloved ${name},`,
+        `Sweet ${name},`
+      ];
+      const intro = greetings[Math.floor(Math.random() * greetings.length)];
+
+      const para1Options = [
+        "From the moment we crossed paths, I sensed an indescribable connection—as if our souls recognized one another. " +
+          (emotions ? `Every moment with you is filled with the radiance of ${emotions}. ` : "Your presence transforms the ordinary into magic. "),
+        "Ever since our eyes met, a warmth has filled my heart—a warmth that grows with every beat. " +
+          (emotions ? `Your essence carries the promise of ${emotions} that lights up my world. ` : "I feel a boundless joy in every shared glance. "),
+        "Since you entered my life, every moment has been painted with love and wonder. " +
+          (emotions ? `The echo of ${emotions} in my heart is a reminder of our bond. ` : "Our connection is as enchanting as a timeless melody. ")
+      ];
+      const paragraph1 = para1Options[Math.floor(Math.random() * para1Options.length)];
+
+      const para2Options = [
+        memories ? `I cherish every memory of ${memories}, each one a precious note in our symphony. ` :
+        "The memories we create are timeless treasures that illuminate my soul.",
+        memories ? `Thinking back on ${memories} fills me with profound joy—a collection of moments that make our story unique. ` :
+        "Every shared moment is a brushstroke on the canvas of our love.",
+        memories ? `The recollection of ${memories} wraps me in warmth—each memory an invitation to smile. ` :
+        "Our past moments whisper a love story written in the stars."
+      ];
+      const paragraph2 = para2Options[Math.floor(Math.random() * para2Options.length)];
+
+      const para3Options = [
+        hopes ? `I envision a future filled with ${hopes}, where each day unfolds a new chapter of tenderness.` :
+        "I eagerly await a tomorrow that deepens our bond and brightens our horizon.",
+        hopes ? `In my dreams, our journey continues with ${hopes}—a tapestry of adventures and whispered promises.` :
+        "Every new day is a promise of love and togetherness.",
+        hopes ? `May the coming days be adorned with ${hopes}, leading us to a world where our love blossoms.` :
+        "I look forward to a future as enchanting as the love we nurture every day."
+      ];
+      const paragraph3 = para3Options[Math.floor(Math.random() * para3Options.length)];
+
+      const closings = [
+        "Forever and always,",
+        "Yours eternally,",
+        "In endless love,",
+        "With all my heart,",
+        "Always yours,"
+      ];
+      const closing = closings[Math.floor(Math.random() * closings.length)];
+
+      // Assemble the full letter text
+      fullLetterText = intro + "\n\n" +
+                       paragraph1 + "\n\n" +
+                       paragraph2 + "\n\n" +
+                       paragraph3 + "\n\n" +
+                       closing + "\n[Your Name]";
+
+      // Song Recommendation
+      const songRecommendations = [
+        "Can't Help Falling in Love - Elvis Presley",
+        "I Will Always Love You - Whitney Houston",
+        "Just The Way You Are - Bruno Mars",
+        "Kiss Me - Sixpence None the Richer",
+        "Perfect - Ed Sheeran",
+        "Summer Breeze - Seals & Crofts",
+        "Let's Get It On - Marvin Gaye",
+        "Your Song - Elton John",
+        "All of Me - John Legend",
+        "Endless Love - Diana Ross & Lionel Richie",
+        "Make You Feel My Love - Adele",
+        "I Don't Want to Miss a Thing - Aerosmith",
+        "Moon River - Audrey Hepburn",
+        "Lucky - Jason Mraz & Colbie Caillat",
+        "Happy - Pharrell Williams",
+        "A Thousand Years - Christina Perri",
+        "Something - The Beatles",
+        "I Will Follow You into the Dark - Death Cab for Cutie",
+        "Here Comes the Sun - The Beatles",
+        "Crazy in Love - Beyoncé featuring Jay-Z"
+      ];
+      const recommendedSong = songRecommendations[Math.floor(Math.random() * songRecommendations.length)];
+
+      // Reveal additional buttons
+      document.getElementById('regenBtn').style.display = "inline-block";
+      document.getElementById('copyBtn').style.display = "inline-block";
+      document.getElementById('shareBtn').style.display = "inline-block";
+
+      // Clear output areas and start the typewriter effect for the love letter
+      document.getElementById('loveLetterOutput').innerText = "";
+      document.getElementById('songRecommendationOutput').innerText = "Recommended Song: " + recommendedSong;
+      currentIndex = 0;
+      typeWriter();
+    }
+
+    // Typewriter effect (character by character)
+    function typeWriter() {
+      if (currentIndex < fullLetterText.length) {
+        document.getElementById('loveLetterOutput').innerText += fullLetterText.charAt(currentIndex);
+        currentIndex++;
+        setTimeout(typeWriter, typewriterSpeed);
+      }
+    }
+
+    // Copy content to clipboard with fallback
+    function copyToClipboard() {
+      const textToCopy = document.getElementById('loveLetterOutput').innerText + "\n" +
+                         document.getElementById('songRecommendationOutput').innerText;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(textToCopy)
+          .then(() => { showPopup("Copied to clipboard!"); })
+          .catch((err) => { console.error("Error copying text: ", err); fallbackCopyTextToClipboard(textToCopy); });
+      } else {
+        fallbackCopyTextToClipboard(textToCopy);
+      }
+    }
+    function fallbackCopyTextToClipboard(text) {
+      const textArea = document.createElement("textarea");
+      textArea.value = text;
+      textArea.style.position = "fixed";
+      document.body.appendChild(textArea);
+      textArea.select();
+      try {
+        document.execCommand('copy');
+        showPopup("Copied to clipboard!");
+      } catch (err) {
+        console.error("Fallback: Unable to copy", err);
+        showPopup("Copy failed!");
+      }
+      document.body.removeChild(textArea);
+    }
+    function showPopup(message) {
+      const popup = document.getElementById('copyPopup');
+      popup.innerText = message;
+      popup.classList.add("show");
+      setTimeout(() => { popup.classList.remove("show"); }, 2000);
+    }
+
+    // Open the Share Dialog Modal
+    function openShareDialog() {
+      document.getElementById('shareModal').classList.add('active');
+    }
+    function closeShareDialog() {
+      document.getElementById('shareModal').classList.remove('active');
+    }
+    // Share the content based on selected platform
+    function sharePlatform(platform) {
+      const letterText = document.getElementById('loveLetterOutput').innerText;
+      const songText = document.getElementById('songRecommendationOutput').innerText;
+      const fullText = encodeURIComponent(letterText + "\n" + songText);
+      let shareURL = "";
+      if (platform === 'twitter') {
+        shareURL = "https://twitter.com/intent/tweet?text=" + fullText;
+      } 
+      window.open(shareURL, "_blank");
+      closeShareDialog();
+    }
+  </script>
+</body>
+</html>
