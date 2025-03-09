@@ -25,11 +25,14 @@ Open index.html in any modern web browser.
 
 Screenshots 
 ![1](https://github.com/user-attachments/assets/98034661-5bab-4701-b461-f645047f0c05)
+
 Love at First Write - Input Form:This image showcases the main interface of "Love at First Write," where users input details such as the recipient's name, emotions they want to convey, shared memories, and hopes for the future to generate a heartfelt letter.
 ![2](https://github.com/user-attachments/assets/574eb9b2-dbbc-4cc0-9fd9-eaa169453f6c)
+
 Generated Love Letter & Song Recommendation:After filling out the form, the system generates a personalized romantic letter based on the provided inputs. Additionally, a song recommendation is suggested to complement the emotions in the letter. Users can regenerate, copy, or share the letter.
 
 ![3](https://github.com/user-attachments/assets/1ed9942c-b0f3-4d40-b822-73f14593a339)
+
 Mobile Interface of Love at First Write:This image displays the mobile-optimized version of the platform, ensuring a seamless user experience across devices. The design retains the same aesthetic while making it accessible on smartphones.
 
 Project Demo
