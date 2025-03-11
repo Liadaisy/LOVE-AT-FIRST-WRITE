@@ -8,11 +8,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&family=Sacramento&display=swap" rel="stylesheet">
   <style>
     /* Base & Responsive Styles */
-    * { box-sizing: border-box; }
+    * { 
+      box-sizing: border-box; 
+    }
     body {
       margin: 0;
       padding: 0;
       font-family: 'Montserrat', sans-serif;
+      /* Golden sparkling pointer – replace URL with your desired pointer image */
+      cursor: url('https://i.imgur.com/6Xc6x9D.png'), auto;
       background: url("https://media.post.rvohealth.io/wp-content/uploads/sites/4/2022/02/rainbow-colorful-heart-tunnel-1296x728-header-1024x575.jpg") no-repeat center center;
       background-size: cover;
       min-height: 100vh;
@@ -20,7 +24,10 @@
       line-height: 1.6;
       transition: background 0.5s ease;
     }
-    header, main, footer { text-align: center; padding: 1rem; }
+    header, main, footer { 
+      text-align: center; 
+      padding: 1rem; 
+    }
     header h1 {
       font-family: 'Sacramento', cursive;
       font-size: 3em;
@@ -28,7 +35,10 @@
       margin: 0.5em 0;
       text-shadow: 1px 1px 2px rgba(255,209,220,0.9);
     }
-    header p { font-size: 1.1em; color: #999; }
+    header p { 
+      font-size: 1.1em; 
+      color: #999; 
+    }
     
     /* Gear Icon for Settings */
     #settingsIcon {
@@ -52,13 +62,16 @@
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
       transition: background 0.3s ease;
     }
-    form { text-align: left; }
+    form { 
+      text-align: left; 
+    }
     form label {
       display: block;
       margin: 0.7em 0 0.3em;
       font-weight: 600;
     }
-    form input[type="text"], form textarea {
+    form input[type="text"],
+    form textarea {
       width: 100%;
       padding: 0.75rem;
       border: 1px solid #f7a8b8;
@@ -85,9 +98,11 @@
       font-size: 1em;
       transition: background-color 0.3s ease;
     }
-    .button-row button:hover { background-color: #b3245c; }
+    .button-row button:hover { 
+      background-color: #b3245c; 
+    }
     
-    /* Output Container – Letter Center and Song Sidebar */
+    /* Output Container – Letter (center) and Song (right sidebar) */
     #outputContainer {
       display: none;
       flex-direction: row;
@@ -101,9 +116,10 @@
       background: #fff;
       border: 1px solid #f7a8b8;
       border-radius: 5px;
-      padding: 1rem;
+      padding: 1.5rem;
       font-style: italic;
       white-space: pre-wrap;
+      min-height: 400px;
     }
     .song-output {
       flex: 1;
@@ -115,12 +131,27 @@
       font-style: italic;
       white-space: pre-wrap;
     }
-    /* Play Music button in song output area */
+    /* Play Music button styling */
     #playMusicBtn {
       margin-top: 0.5rem;
       background-color: #388e3c;
     }
-    #playMusicBtn:hover { background-color: #2e7d32; }
+    #playMusicBtn:hover { 
+      background-color: #2e7d32; 
+    }
+    
+    /* Flames Container – for FLAMES/love percentage results */
+    .flames-container {
+      display: none;
+      background: #fff;
+      border: 2px solid #daa520;
+      border-radius: 5px;
+      padding: 1rem;
+      margin-top: 1rem;
+      font-size: 1.2em;
+      font-weight: bold;
+      white-space: pre-wrap;
+    }
     
     /* Popup Message for Copy Confirmation */
     .copy-popup {
@@ -137,9 +168,11 @@
       opacity: 0;
       transition: opacity 0.3s ease;
     }
-    .copy-popup.show { opacity: 1; }
+    .copy-popup.show { 
+      opacity: 1; 
+    }
     
-    /* Share Modal Dialog (only Twitter, Mail, Download) */
+    /* Share Modal Dialog (Only Twitter, Mail, Download) */
     .modal-overlay {
       position: fixed;
       top: 0;
@@ -152,7 +185,9 @@
       align-items: center;
       z-index: 10000;
     }
-    .modal-overlay.active { display: flex; }
+    .modal-overlay.active { 
+      display: flex; 
+    }
     .modal {
       background: #fff;
       border-radius: 10px;
@@ -176,7 +211,9 @@
       cursor: pointer;
       transition: background-color 0.3s ease;
     }
-    .modal button:hover { background-color: #b3245c; }
+    .modal button:hover { 
+      background-color: #b3245c; 
+    }
     .close-modal {
       display: block;
       margin-top: 1rem;
@@ -187,7 +224,7 @@
       cursor: pointer;
     }
     
-    /* Music Modal Dialog (now only Spotify and SoundCloud) */
+    /* Music Modal Dialog (Only Spotify & SoundCloud) */
     .music-modal-overlay {
       position: fixed;
       top: 0;
@@ -200,7 +237,9 @@
       align-items: center;
       z-index: 10000;
     }
-    .music-modal-overlay.active { display: flex; }
+    .music-modal-overlay.active { 
+      display: flex; 
+    }
     .music-modal {
       background: #fff;
       border-radius: 10px;
@@ -223,7 +262,9 @@
       align-items: center;
       z-index: 10000;
     }
-    .settings-modal-overlay.active { display: flex; }
+    .settings-modal-overlay.active { 
+      display: flex; 
+    }
     .settings-modal {
       background: #fff;
       border-radius: 10px;
@@ -246,18 +287,32 @@
     .settings-modal select, .settings-modal input[type="checkbox"] {
       margin: 0.5rem 0 1rem;
     }
-    .settings-modal button {
+    /* Zoom Controls in Settings */
+    .zoom-controls {
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    .zoom-controls button {
       background-color: #d6336c;
       color: white;
-      padding: 0.5rem 1rem;
+      padding: 0.3rem 0.7rem;
+      margin: 0 0.5rem;
       border: none;
       border-radius: 5px;
       cursor: pointer;
+      font-size: 1em;
       transition: background-color 0.3s ease;
+    }
+    .zoom-controls button:hover { 
+      background-color: #b3245c; 
+    }
+    .zoom-controls span { 
+      font-weight: bold; 
+    }
+    .settings-modal button {
       display: block;
       margin: 0.5rem auto;
     }
-    .settings-modal button:hover { background-color: #b3245c; }
     
     /* Footer */
     footer {
@@ -351,6 +406,15 @@
         <input type="checkbox" id="historyToggle" onchange="applySettings()" />
         Save History
       </label>
+      
+      <!-- Zoom Controls -->
+      <div class="zoom-controls">
+        <span>Zoom:</span>
+        <button onclick="zoomIn()">+</button>
+        <button onclick="zoomOut()">−</button>
+        <span id="zoomLevelDisplay">100%</span>
+      </div>
+      
       <button onclick="viewHistory()">View History</button>
       <button class="close-modal" onclick="closeSettings()">Close</button>
     </div>
@@ -410,6 +474,7 @@
         <button type="button" id="copyBtn" onclick="copyToClipboard()" style="display: none;">Copy</button>
         <button type="button" id="shareBtn" onclick="openShareDialog()" style="display: none;">Share</button>
         <button type="button" id="playMusicBtn" onclick="openMusicModal()" style="display: none;">Play Music</button>
+        <button type="button" id="flamesBtn" onclick="checkFlames()" style="display: none;">Flames</button>
       </div>
       
       <!-- Output Container (initially hidden) -->
@@ -417,6 +482,9 @@
         <article id="loveLetterOutput" class="letter-output" aria-label="Generated Love Letter"></article>
         <aside id="songRecommendationOutput" class="song-output" aria-label="Song Recommendation"></aside>
       </div>
+      
+      <!-- Flames Results Container (initially hidden) -->
+      <div id="flamesContainer" class="flames-container" style="display:none;"></div>
     </div>
   </main>
   
@@ -445,9 +513,13 @@
     let fullLetterText = "";
     let currentIndex = 0;
     const typewriterSpeed = 30;
+    let zoomLevel = 1.0; // base zoom at 100%
     
-    // Generate love letter with typewriter effect and assign a song recommendation
+    // Generate the love letter, set song recommendation, and reveal output/buttons
     function generateLoveLetter() {
+      // Hide Flames container if visible
+      document.getElementById('flamesContainer').style.display = "none";
+      
       const recipientName = document.getElementById('name').value.trim() || "Beloved";
       const senderName = document.getElementById('senderName').value.trim() || "Your Name";
       const emotions = document.getElementById('emotions').value.trim();
@@ -496,7 +568,7 @@
       ];
       const closing = closings[Math.floor(Math.random() * closings.length)];
       
-      // Assemble full letter text and use senderName as the signature.
+      // Assemble full letter text with sender's signature.
       fullLetterText = intro + "\n\n" + paragraph1 + "\n\n" + paragraph2 + "\n\n" + paragraph3 + "\n\n" + closing + "\n" + senderName;
       
       // Random Song Recommendation
@@ -524,20 +596,20 @@
       ];
       const recommendedSong = songRecommendations[Math.floor(Math.random() * songRecommendations.length)];
       
-      // Reset outputs and reveal the output container and additional buttons
+      // Reset letter and song outputs, show the output container and buttons
       document.getElementById('loveLetterOutput').innerText = "";
       document.getElementById('songRecommendationOutput').innerText = "Recommended Song: " + recommendedSong;
       document.getElementById('outputContainer').style.display = "flex";
-      
       document.getElementById('regenBtn').style.display = "inline-block";
       document.getElementById('copyBtn').style.display = "inline-block";
       document.getElementById('shareBtn').style.display = "inline-block";
       document.getElementById('playMusicBtn').style.display = "inline-block";
+      document.getElementById('flamesBtn').style.display = "inline-block";
       
       currentIndex = 0;
       typeWriter();
       
-      // Save to history if enabled
+      // Save letter to history if enabled
       if (document.getElementById('historyToggle').checked) {
         let history = JSON.parse(localStorage.getItem('loveLetterHistory')) || [];
         history.push(fullLetterText);
@@ -545,6 +617,7 @@
       }
     }
     
+    // Typewriter effect to display the letter one character at a time
     function typeWriter() {
       if (currentIndex < fullLetterText.length) {
         document.getElementById('loveLetterOutput').innerText += fullLetterText.charAt(currentIndex);
@@ -554,11 +627,12 @@
     }
     
     function copyToClipboard() {
-      const textToCopy = document.getElementById('loveLetterOutput').innerText + "\n" + document.getElementById('songRecommendationOutput').innerText;
+      const textToCopy = document.getElementById('loveLetterOutput').innerText + "\n" +
+                          document.getElementById('songRecommendationOutput').innerText;
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(textToCopy)
           .then(() => { showPopup("Copied to clipboard!"); })
-          .catch((err) => { console.error("Error copying text: ", err); fallbackCopyTextToClipboard(textToCopy); });
+          .catch((err) => { console.error("Error copying text:", err); fallbackCopyTextToClipboard(textToCopy); });
       } else {
         fallbackCopyTextToClipboard(textToCopy);
       }
@@ -595,7 +669,7 @@
       document.getElementById('shareModal').classList.remove('active');
     }
     
-    // Share: Uses only Twitter and Mail; Download option is handled separately.
+    // Share: Only Twitter and Mail are handled here.
     function sharePlatform(platform) {
       const letterText = document.getElementById('loveLetterOutput').innerText;
       const songText = document.getElementById('songRecommendationOutput').innerText;
@@ -611,9 +685,9 @@
     }
     
     function downloadLetter() {
-      const content = document.getElementById('loveLetterOutput').innerText + "\n" + document.getElementById('songRecommendationOutput').innerText;
+      const content = document.getElementById('loveLetterOutput').innerText + "\n" +
+                      document.getElementById('songRecommendationOutput').innerText;
       const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
-      // For IE/Edge support
       if (window.navigator.msSaveOrOpenBlob) {
         window.navigator.msSaveOrOpenBlob(blob, "love_letter.txt");
       } else {
@@ -658,14 +732,31 @@
     }
     
     function applySettings() {
+      // Apply theme
       const theme = document.getElementById('themeSelect').value;
       if (theme === "dark") {
         document.body.classList.add("dark-theme");
       } else {
         document.body.classList.remove("dark-theme");
       }
+      // Apply font style for the letter output
       const font = document.getElementById('fontSelect').value;
       document.getElementById('loveLetterOutput').style.fontFamily = font;
+    }
+    
+    // Zoom Functions
+    function zoomIn() {
+      zoomLevel = Math.min(zoomLevel + 0.1, 2.0); // maximum 200%
+      updateZoom();
+    }
+    function zoomOut() {
+      zoomLevel = Math.max(zoomLevel - 0.1, 0.5); // minimum 50%
+      updateZoom();
+    }
+    function updateZoom() {
+      const newSize = 16 * zoomLevel; // assuming base size is 16px
+      document.getElementById('loveLetterOutput').style.fontSize = newSize + "px";
+      document.getElementById('zoomLevelDisplay').innerText = Math.round(zoomLevel * 100) + "%";
     }
     
     function viewHistory() {
@@ -675,6 +766,36 @@
       } else {
         alert("History:\n\n" + history.join("\n\n---\n\n"));
       }
+    }
+    
+    // FLAMES Function – Calculate a love percentage and display FLAMES result with a surprise emoji
+    function checkFlames() {
+      const recipientName = document.getElementById('name').value.trim();
+      const senderName = document.getElementById('senderName').value.trim();
+      if (!recipientName || !senderName) {
+        alert("Please enter both recipient and your name for FLAMES calculation.");
+        return;
+      }
+      let combined = recipientName + senderName;
+      let sum = 0;
+      for (let i = 0; i < combined.length; i++) {
+        sum += combined.charCodeAt(i);
+      }
+      // Calculate a love score between 0 and 100
+      let loveScore = sum % 101;
+      // Determine marriage probability (gender neutral)
+      let marriageProb = (loveScore >= 50) ? "High" : "Low";
+      // Emoji surprise based on the love score
+      let emoji = "";
+      if (loveScore >= 80) emoji = "😍💖🔥";
+      else if (loveScore >= 60) emoji = "😊💕🔥";
+      else if (loveScore >= 40) emoji = "😉💗";
+      else emoji = "😅";
+      const result = `FLAMES Result:\nLove Score: ${loveScore}%\nMarriage Possibility: ${marriageProb}\n${emoji}`;
+      // Hide main output container and show Flames results
+      document.getElementById('outputContainer').style.display = "none";
+      document.getElementById('flamesContainer').style.display = "block";
+      document.getElementById('flamesContainer').innerText = result;
     }
   </script>
 </body>
